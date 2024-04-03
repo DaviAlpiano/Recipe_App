@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
+import SearchBar from '../SearchBar/SearchBar';
 
 function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false); // Estado para controlar a visibilidade (Davi)
@@ -70,7 +71,7 @@ function Header() {
           />
         </button>
       )}
-      {isSearchVisible && <input type="text" data-testid="search-input" />}
+      {isSearchVisible && <SearchBar />}
       <h1 data-testid="page-title">{title}</h1>
     </header>
   );
