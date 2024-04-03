@@ -4,11 +4,6 @@ import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
 import Login from './Login';
 
-jest.mock('react-router-dom', () => ({
-  ...jest.requireActual('react-router-dom'),
-  useNavigate: jest.fn(),
-}));
-
 describe('Login', () => {
   test('renders the login form', () => {
     const { getByLabelText, getByTestId } = render(
