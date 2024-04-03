@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <div className="meals">
-        <span className="logo">GRUPO PUDIM</span>
+        <span className="logo">TRYBE</span>
         <object
           className="rocksGlass"
           type="image/svg+xml"
