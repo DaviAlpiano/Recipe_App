@@ -78,3 +78,15 @@ export const dataChickenMock = {
     },
   ],
 };
+
+export const dataNullMock = {
+  meals: null,
+  drinks: [
+    {
+      idDrink: '178319',
+      strDrink: 'Aquamarine',
+      strDrinkAlternate: null,
+      strDrinkThumb: 'https://www.thecocktaildb.com/images/media/drink/zvsre31572902738.jpg',
+    },
+  ],
+};

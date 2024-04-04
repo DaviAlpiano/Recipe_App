@@ -24,7 +24,8 @@ function SearchBar() {
   // ou caso seja encontrado so um, redireciona pra pagina do mesmo
   useEffect(() => {
     if (foods === null) {
-      return window.alert('Sorry, we haven\'t found any recipes for these filters');
+      window.alert('Sorry, we haven\'t found any recipes for these filters');
+      return;
     }
     if (foods.length === 1) {
       const object = Object.keys(foods[0]);
