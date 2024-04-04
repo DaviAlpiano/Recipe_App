@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import rockGlass from './images/rockGlass.svg';
@@ -10,66 +9,82 @@ import DoneRecipes from './components/DoneRecipes/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes/FavoriteRecipes';
 import Profile from './components/Profile/Profile';
 import Header from './components/Header/Header';
+import APIProvider from './components/Context/ContextAPI/APIProvider';
 
 function App() {
   return (
-    <Router>
-      <div className="meals">
+    <APIProvider>
+
+      <Router>
+        {/* <div className="meals">
         <span className="logo">TRYBE</span>
         <object className="rocksGlass" type="image/svg+xml" data={ rockGlass }>
-          Glass
+        Glass
         </object>
-      </div>
-      <Routes>
-        <Route path="/" element={ <Login /> } />
-        <Route
-          path="/meals"
-          element={
-            <>
-              <Header />
-              <Meals />
-            </>
+      </div> */}
+        <Routes>
+          <Route path="/" element={ <Login /> } />
+          <Route
+            path="/meals"
+            element={
+              <>
+                <Header />
+                <Meals />
+              </>
           }
-        />
-        <Route
-          path="/drinks"
-          element={
-            <>
-              <Header />
-              <Drinks />
-            </>
+          />
+          <Route
+            path="/drinks"
+            element={
+              <>
+                <Header />
+                <Drinks />
+              </>
           }
-        />
-        <Route
-          path="/profile"
-          element={
-            <>
-              <Header />
-              <Profile />
-            </>
+          />
+          <Route
+            path="/profile"
+            element={
+              <>
+                <Header />
+                <Profile />
+              </>
           }
-        />
-        <Route
-          path="/done-recipes"
-          element={
-            <>
-              <Header />
-              <DoneRecipes />
-            </>
+          />
+          <Route
+            path="/done-recipes"
+            element={
+              <>
+                <Header />
+                <DoneRecipes />
+              </>
           }
-        />
-        <Route
-          path="/favorite-recipes"
-          element={
-            <>
-              <Header />
-              <FavoriteRecipes />
-            </>
+          />
+          <Route
+            path="/favorite-recipes"
+            element={
+              <>
+                <Header />
+                <FavoriteRecipes />
+              </>
           }
-        />
-        {/* Adicionem as rotas aqui, pessoal */}
-      </Routes>
-    </Router>
+          />
+          {/* Adicionem as rotas aqui, pessoal */}
+          <Route
+            path="/drinks/:id"
+            element={
+              <Header />
+            }
+          />
+          <Route
+            path="/meals/:id"
+            element={
+              <Header />
+          }
+          />
+        </Routes>
+      </Router>
+    </APIProvider>
   );
 }
 
