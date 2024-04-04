@@ -171,8 +171,8 @@ describe('Testando se a SearchBar funciona como o esperado.', async () => {
     vi.spyOn(global, 'fetch').mockResolvedValue({
       json: async () => dataSearchMock,
     } as Response);
-    
-    const alertSpy = vi.spyOn(window, 'alert')
+
+    const alertSpy = vi.spyOn(window, 'alert');
 
     const { user } = renderWithRouterContext(<App />, { route: '/meals' });
 

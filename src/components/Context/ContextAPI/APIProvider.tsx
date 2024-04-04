@@ -11,7 +11,7 @@ function APIProvider({ children }: ThemeProviderProps) {
   const [localUrl, setLocalUrl] = useState<string>();
   const [text, setText] = useState<string>('');
   const [foods, setFoods] = useState<MealType | DrinkType[]>([]);
-  
+
   useEffect(() => {
     const FetchApi = async () => {
       try {
