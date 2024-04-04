@@ -12,19 +12,21 @@ function Meals() {
   }, []);
 
   return (
-    <div>
-      {meals.map((meal, index) => (
-        <div key={ meal.idMeal } data-testid={ `${index}-recipe-card` }>
-          <img
-            src={ meal.strMealThumb }
-            alt={ meal.strMeal }
-            data-testid={ `${index}-card-img` }
-          />
-          <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
-        </div>
-      ))}
-    </div>
-    <Footer />
+    <>
+      <div>
+        {meals.map((meal, index) => (
+          <div key={ meal.idMeal } data-testid={ `${index}-recipe-card` }>
+            <img
+              src={ meal.strMealThumb }
+              alt={ meal.strMeal }
+              data-testid={ `${index}-card-img` }
+            />
+            <p data-testid={ `${index}-card-name` }>{meal.strMeal}</p>
+          </div>
+        ))}
+      </div>
+      <Footer />
+    </>
   );
 }
 
