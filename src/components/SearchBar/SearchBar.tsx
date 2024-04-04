@@ -4,7 +4,7 @@ import APIConxtet from '../Context/ContextAPI/APIContext';
 import { InfoSearchBar } from '../types';
 
 function SearchBar() {
-  const { searchOption, foods, text } = useContext(APIConxtet);
+  const { searchOption, foods, text, optionAPI } = useContext(APIConxtet);
   const navigate = useNavigate();
   const [info, setInfo] = useState<InfoSearchBar>({
     pesquisa: '',
@@ -13,12 +13,15 @@ function SearchBar() {
   });
   const { pathname } = useLocation();
 
+  // Davi: pega as informações dos inputs
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
     const valor = e.currentTarget.value;
     const { name } = e.currentTarget;
     setInfo({ ...info, [name]: valor, url: pathname });
   }
 
+  // Davi: exibe o alert caso nao seja encontrado nenhum elemento na busca
+  // ou caso seja encontrado so um, redireciona pra pagina do mesmo
   useEffect(() => {
     if (foods === null) {
       return window.alert('Sorry, we haven\'t found any recipes for these filters');
@@ -28,8 +31,10 @@ function SearchBar() {
       const fistobject = object[0];
       navigate(`${pathname}/${foods[0][fistobject]}`);
     }
-  }, [foods]);
+  }, [optionAPI, text, foods]);
 
+  // Davi: exibe um alert caso tente procurar com mais do q a primeira letra
+  // ou envia as informações do input pro provider
   function handleButton() {
     if (info.text.length > 1 && info.pesquisa === 'first-letter') {
       return window.alert('Your search must have only 1 (one) character');
