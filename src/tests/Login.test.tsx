@@ -2,7 +2,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import { MemoryRouter } from 'react-router-dom';
-import Login from './Login';
+import Login from '../components/Login/Login';
 
 describe('Login', () => {
   test('renders the login form', () => {
