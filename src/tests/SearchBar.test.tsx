@@ -182,15 +182,16 @@ describe('Testando se a SearchBar funciona como o esperado.', async () => {
 
     const textarea = screen.getByRole('textbox');
     const name = screen.getByText(/name/i);
+    const ingredient = screen.getByText(/ingredient/i);
     const buttonSearch = screen.getByText(/search/i);
 
-    await user.type(textarea, 'chicken');
     await user.click(name);
-    await user.click(buttonSearch);
     await user.type(textarea, 'Aquamarine');
     await user.click(buttonSearch);
+    await user.click(ingredient);
+    await user.click(buttonSearch);
 
-    expect(alertSpy).toHaveBeenCalled();
+    expect(alertSpy).not.toHaveBeenCalled();
     vi.clearAllMocks();
   });
 });

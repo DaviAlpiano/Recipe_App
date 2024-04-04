@@ -10,8 +10,9 @@ function APIProvider({ children }: ThemeProviderProps) {
   const [optionAPI, setOptionAPI] = useState<string>('');
   const [localUrl, setLocalUrl] = useState<string>();
   const [text, setText] = useState<string>('');
-  const [foods, setFoods] = useState<MealType | DrinkType[]>([]);
+  const [foods, setFoods] = useState<MealType[] | DrinkType[]>([]);
 
+  //Davi: faz a busca na api com base nas informações
   useEffect(() => {
     const FetchApi = async () => {
       try {
@@ -60,8 +61,9 @@ function APIProvider({ children }: ThemeProviderProps) {
     };
 
     FetchApi();
-  }, [text]);
+  }, [text, optionAPI]);
 
+  //Davi: pega as informações da SearchBar pra fazer a busca na api.
   function searchOption(param:InfoSearchBar) {
     setOptionAPI(param.pesquisa);
     setText(param.text);
@@ -70,6 +72,8 @@ function APIProvider({ children }: ThemeProviderProps) {
 
   const value = {
     foods,
+    text,
+    optionAPI,
     searchOption,
   };
 

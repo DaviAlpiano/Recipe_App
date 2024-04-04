@@ -1,5 +1,7 @@
 export type APIContextType = {
-  foods: MealType | DrinkType [],
+  foods: MealType[] | DrinkType[],
+  text: string,
+  optionAPI: string,
   searchOption: (param:InfoSearchBar) => void,
 };
 
