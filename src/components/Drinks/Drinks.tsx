@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Drink } from '../../types'; // Importa a interface Drink de types.ts
+import Footer from '../Footer/Footer';
 
 function Drinks() {
   const [drinks, setDrinks] = useState<Drink[]>([]);
@@ -23,6 +24,7 @@ function Drinks() {
         </div>
       ))}
     </div>
+    <Footer />
   );
 }
 
