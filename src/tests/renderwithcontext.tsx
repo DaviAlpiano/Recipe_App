@@ -1,11 +1,22 @@
 import { render } from '@testing-library/react';
+import { BrowserRouter } from 'react-router-dom';
+import userEvent from '@testing-library/user-event';
+import APIProvider from '../components/Context/ContextAPI/APIProvider';
 
-const renderWithContext = (ui: JSX.Element) => {
+const renderWithRouterContext = (ui: JSX.Element, { route = '/' } = {}) => {
+  window.history.pushState({}, '', route);
+
   return {
+    user: userEvent.setup(),
     ...render(
-      ui,
+      <APIProvider>
+        {ui}
+        {/* <BrowserRouter>
+        {ui}
+        </BrowserRouter> */}
+      </APIProvider>,
     ),
   };
 };
 
-export default renderWithContext;
+export default renderWithRouterContext;

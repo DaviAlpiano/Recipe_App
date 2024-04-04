@@ -1,4 +1,3 @@
-import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import rockGlass from './images/rockGlass.svg';
@@ -71,6 +70,18 @@ function App() {
           }
           />
           {/* Adicionem as rotas aqui, pessoal */}
+          <Route
+            path="/drinks/:id"
+            element={
+              <Header />
+            }
+          />
+          <Route
+            path="/meals/:id"
+            element={
+              <Header />
+          }
+          />
         </Routes>
       </Router>
     </APIProvider>

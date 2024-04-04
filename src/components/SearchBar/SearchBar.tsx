@@ -1,16 +1,34 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import APIConxtet from '../Context/ContextAPI/APIContext';
-import { InfoSearchBar } from '../../types';
+import { InfoSearchBar } from '../types';
 
 function SearchBar() {
-  const { searchOption } = useContext(APIConxtet);
-  const [info, setInfo] = useState<InfoSearchBar>({});
+  const { searchOption, foods, text } = useContext(APIConxtet);
+  const navigate = useNavigate();
+  const [info, setInfo] = useState<InfoSearchBar>({
+    pesquisa: '',
+    text: '',
+    url: '',
+  });
+  const { pathname } = useLocation();
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
     const valor = e.currentTarget.value;
     const { name } = e.currentTarget;
-    setInfo({ ...info, [name]: valor });
+    setInfo({ ...info, [name]: valor, url: pathname });
   }
+
+  useEffect(() => {
+    if (foods === null) {
+      return window.alert('Sorry, we haven\'t found any recipes for these filters');
+    }
+    if (foods.length === 1) {
+      const object = Object.keys(foods[0]);
+      const fistobject = object[0];
+      navigate(`${pathname}/${foods[0][fistobject]}`);
+    }
+  }, [foods]);
 
   function handleButton() {
     if (info.text.length > 1 && info.pesquisa === 'first-letter') {
