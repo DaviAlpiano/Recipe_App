@@ -12,7 +12,7 @@ function APIProvider({ children }: ThemeProviderProps) {
   const [text, setText] = useState<string>('');
   const [foods, setFoods] = useState<MealType[] | DrinkType[]>([]);
 
-  //Davi: faz a busca na api com base nas informações
+  // Davi: faz a busca na api com base nas informações
   useEffect(() => {
     const FetchApi = async () => {
       try {
@@ -63,7 +63,7 @@ function APIProvider({ children }: ThemeProviderProps) {
     FetchApi();
   }, [text, optionAPI]);
 
-  //Davi: pega as informações da SearchBar pra fazer a busca na api.
+  // Davi: pega as informações da SearchBar pra fazer a busca na api.
   function searchOption(param:InfoSearchBar) {
     setOptionAPI(param.pesquisa);
     setText(param.text);
