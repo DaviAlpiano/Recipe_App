@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import APIContext from '../Context/ContextAPI/APIContext';
 import { DrinkType, MealCategory } from '../types';
 
 function Drinks() {
@@ -71,10 +72,14 @@ function Drinks() {
       </div>
       <div className="drinks-container">
         {drinks.map((drink, index) => (
-          <div
+          <div // Mudando de button para div para manter os data-testid
             key={ drink.idDrink }
             data-testid={ `${index}-recipe-card` }
             onClick={ () => handleRecipeClick(drink.idDrink) }
+            role="button" // Acessibilidade
+            tabIndex={ 0 } // Acessibilidade, permite foco pelo teclado
+            onKeyPress={ (e) => e.key === 'Enter' && handleRecipeClick(drink.idDrink) }
+            style={ { cursor: 'pointer' } } // Visual feedback for interactivity
           >
             <img
               src={ drink.strDrinkThumb }

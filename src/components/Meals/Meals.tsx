@@ -49,6 +49,12 @@ function Meals() {
     navigate(`/meals/${id}`);
   };
 
+  const handleKeyPress = (event: React.KeyboardEvent, id: string) => {
+    if (event.key === 'Enter') {
+      handleRecipeClick(id);
+    }
+  };
+
   return (
     <div>
       <div className="category-buttons">
@@ -75,6 +81,10 @@ function Meals() {
             key={ meal.idMeal }
             data-testid={ `${index}-recipe-card` }
             onClick={ () => handleRecipeClick(meal.idMeal) }
+            onKeyPress={ (event) => handleKeyPress(event, meal.idMeal) }
+            role="button"
+            tabIndex={ 0 }
+            style={ { cursor: 'pointer' } } // Visual feedback for interactivity
           >
             <img
               src={ meal.strMealThumb }
