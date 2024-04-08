@@ -10,7 +10,7 @@ type APIContextWithText = {
 };
 
 function SearchBar() {
-  const { searchOption, foods, text, optionAPI } = useContext(APIContext) as APIContextWithText;
+  const { searchOption, foods, text } = useContext(APIContext) as APIContextWithText;
   const navigate = useNavigate();
   const [info, setInfo] = useState<InfoSearchBar>({
     pesquisa: '',
@@ -26,7 +26,6 @@ function SearchBar() {
   // Davi: exibe o alert caso nao seja encontrado nenhum elemento na busca
   // ou caso seja encontrado so um, redireciona pra pagina do mesmo
   useEffect(() => {
-
     if (foods && foods.length === 1) {
       const firstFood = foods[0];
       const foodId = 'idMeal' in firstFood ? firstFood.idMeal : firstFood.idDrink;
