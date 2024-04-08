@@ -19,7 +19,7 @@ function App() {
         {/* Header e Footer serão renderizados em todas as páginas, mas Header é condicional dentro de cada rota, se necessário */}
         <Routes>
           <Route
-            path="/login"
+            path="/"
             element={ <Login /> }
           />
           <Route
