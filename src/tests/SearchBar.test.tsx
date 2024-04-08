@@ -2,7 +2,7 @@ import { screen } from '@testing-library/dom';
 import { vi } from 'vitest';
 import App from '../App';
 import renderWithRouterContext from './renderwithcontext';
-import { dataChickenMock, dataSearchMock } from './Mock';
+import { dataChickenMock, dataNullMock, dataSearchMock } from './Mock';
 
 describe('Testando se a SearchBar funciona como o esperado.', async () => {
   it('SearchBar aparece quando clicado no botão de deixar ela visivel.', async () => {
@@ -168,9 +168,16 @@ describe('Testando se a SearchBar funciona como o esperado.', async () => {
   });
 
   it('É esperado que apareça um alert ao digiar um item que nao tenha.', async () => {
-    vi.spyOn(global, 'fetch').mockResolvedValue({
+    vi.spyOn(global, 'fetch').mockResolvedValueOnce({
       json: async () => dataSearchMock,
-    } as Response);
+    } as Response).mockResolvedValueOnce({
+      json: async () => dataNullMock,
+    } as Response).mockResolvedValueOnce({
+      json: async () => dataNullMock,
+    } as Response)
+      .mockResolvedValueOnce({
+        json: async () => dataNullMock,
+      } as Response);
 
     const alertSpy = vi.spyOn(window, 'alert');
 
@@ -181,15 +188,14 @@ describe('Testando se a SearchBar funciona como o esperado.', async () => {
     await user.click(buttonVisible);
 
     const textarea = screen.getByRole('textbox');
-    const name = screen.getByText(/name/i);
+    const name = screen.getByTestId('first-letter-search-radio');
     const buttonSearch = screen.getByText(/search/i);
 
-    await user.type(textarea, 'chicken');
     await user.click(name);
-    await user.click(buttonSearch);
-    await user.type(textarea, 'Aquamarine');
+    await user.type(textarea, 'x');
     await user.click(buttonSearch);
 
+    expect(name).toBeChecked();
     expect(alertSpy).toHaveBeenCalled();
     vi.clearAllMocks();
   });

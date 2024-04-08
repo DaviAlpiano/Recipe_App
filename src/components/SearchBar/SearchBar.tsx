@@ -10,7 +10,7 @@ type APIContextWithText = {
 };
 
 function SearchBar() {
-  const { searchOption, foods, text } = useContext(APIContext) as APIContextWithText;
+  const { searchOption, foods, text, optionAPI } = useContext(APIContext) as APIContextWithText;
   const navigate = useNavigate();
   const [info, setInfo] = useState<InfoSearchBar>({
     pesquisa: '',
@@ -18,13 +18,15 @@ function SearchBar() {
     url: '',
   });
   const { pathname } = useLocation();
-
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { value, name } = e.currentTarget;
     setInfo({ ...info, [name]: value, url: pathname });
   }
 
+  // Davi: exibe o alert caso nao seja encontrado nenhum elemento na busca
+  // ou caso seja encontrado so um, redireciona pra pagina do mesmo
   useEffect(() => {
+
     if (foods && foods.length === 1) {
       const firstFood = foods[0];
       const foodId = 'idMeal' in firstFood ? firstFood.idMeal : firstFood.idDrink;
@@ -36,7 +38,8 @@ function SearchBar() {
       window.alert("Sorry, we haven't found any recipes for these filters");
     }
   }, [foods, navigate, pathname]);
-
+  // Davi: exibe um alert caso tente procurar com mais do q a primeira letra
+  // ou envia as informações do input pro provider
   function handleButton() {
     if (info.text.length > 1 && info.pesquisa === 'first-letter') {
       window.alert('Your search must have only 1 (one) character');
