@@ -1,54 +1,60 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import APIConxtet from '../Context/ContextAPI/APIContext';
-import { InfoSearchBar } from '../types';
+import APIContext from '../Context/ContextAPI/APIContext';
+import { InfoSearchBar, Meal, Drink } from '../types';
+
+type APIContextWithText = {
+  searchOption: (search: InfoSearchBar) => void;
+  foods: (Meal | Drink)[] | null;
+  text: string;
+};
 
 function SearchBar() {
-  const { searchOption, foods, text, optionAPI } = useContext(APIConxtet);
+  const { searchOption, foods, text, optionAPI } = useContext(APIContext) as APIContextWithText;
   const navigate = useNavigate();
   const [info, setInfo] = useState<InfoSearchBar>({
     pesquisa: '',
-    text: '',
+    text,
     url: '',
   });
   const { pathname } = useLocation();
-
-  // Davi: pega as informações dos inputs
-  function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
-    const valor = e.currentTarget.value;
-    const { name } = e.currentTarget;
-    setInfo({ ...info, [name]: valor, url: pathname });
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { value, name } = e.currentTarget;
+    setInfo({ ...info, [name]: value, url: pathname });
   }
 
   // Davi: exibe o alert caso nao seja encontrado nenhum elemento na busca
   // ou caso seja encontrado so um, redireciona pra pagina do mesmo
   useEffect(() => {
-    if (foods === null) {
-      window.alert('Sorry, we haven\'t found any recipes for these filters');
-      return;
-    }
-    if (foods.length === 1) {
-      const object = Object.keys(foods[0]);
-      const fistobject = object[0];
-      navigate(`${pathname}/${foods[0][fistobject]}`);
-    }
-  }, [optionAPI, text, foods]);
 
+    if (foods && foods.length === 1) {
+      const firstFood = foods[0];
+      const foodId = 'idMeal' in firstFood ? firstFood.idMeal : firstFood.idDrink;
+      // Essa é a parte mantida exatamente igual ao código funcional
+      if (!pathname.includes(foodId)) {
+        navigate(`/${'idMeal' in firstFood ? 'meals' : 'drinks'}/${foodId}`);
+      }
+    } else if (foods && foods.length === 0) {
+      window.alert("Sorry, we haven't found any recipes for these filters");
+    }
+  }, [foods, navigate, pathname]);
   // Davi: exibe um alert caso tente procurar com mais do q a primeira letra
   // ou envia as informações do input pro provider
   function handleButton() {
     if (info.text.length > 1 && info.pesquisa === 'first-letter') {
-      return window.alert('Your search must have only 1 (one) character');
+      window.alert('Your search must have only 1 (one) character');
+    } else {
+      searchOption(info);
     }
-    searchOption(info);
   }
+
   return (
     <div>
       <input
         data-testid="search-input"
         type="text"
         name="text"
-        id="text"
+        value={ info.text }
         onChange={ handleChange }
       />
       <input
@@ -80,6 +86,7 @@ function SearchBar() {
       <label htmlFor="first-letter">First Letter</label>
       <button
         data-testid="exec-search-btn"
+        type="button"
         onClick={ handleButton }
       >
         Search

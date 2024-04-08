@@ -1,3 +1,5 @@
+// types.ts
+
 export interface User {
   id: number;
   name: string;
@@ -14,4 +16,13 @@ export interface Drink {
   idDrink: string;
   strDrink: string;
   strDrinkThumb: string;
+}
+
+// Define um tipo que pode ser tanto uma Meal quanto uma Drink
+export type MealOrDrink = Meal | Drink;
+
+export interface InfoSearchBar {
+  pesquisa: string;
+  text: string;
+  url: string;
 }

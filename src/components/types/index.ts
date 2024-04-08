@@ -22,3 +22,18 @@ export type MealType = {
   strMeal: string,
   strMealThumb: string,
 };
+
+export interface MealCategory {
+  strCategory: string;
+}
+
+export interface Drink {
+  idDrink: string;
+  strDrink: string;
+  strDrinkThumb: string;
+}
+export interface Meal {
+  idMeal: string;
+  strMeal: string;
+  strMealThumb: string;
+}
