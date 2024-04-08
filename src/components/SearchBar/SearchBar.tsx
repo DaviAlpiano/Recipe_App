@@ -8,7 +8,7 @@ type APIContextWithText = {
   foods: (Meal | Drink)[] | null;
   text: string;
 };
-
+// Farid: Conflito resolvido
 function SearchBar() {
   const { searchOption, foods, text } = useContext(APIContext) as APIContextWithText;
   const navigate = useNavigate();
