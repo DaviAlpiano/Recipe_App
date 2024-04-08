@@ -1,7 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
-import rockGlass from './images/rockGlass.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login/Login';
 import Meals from './components/Meals/Meals';
@@ -19,7 +18,10 @@ function App() {
       <Router>
         {/* Header e Footer serão renderizados em todas as páginas, mas Header é condicional dentro de cada rota, se necessário */}
         <Routes>
-          <Route path="/" element={ <Login /> } />
+          <Route
+            path="/login"
+            element={ <Login /> }
+          />
           <Route
             path="/meals"
             element={ (
@@ -67,7 +69,8 @@ function App() {
           />
           <Route path="/drinks/:id" element={ <Header /> } />
           <Route path="/meals/:id" element={ <Header /> } />
-          {/* Adicione outras rotas conforme necessário */}
+          <Route path="/login/:id" element={ <Login /> } />
+          {/* outras rotas */}
         </Routes>
         <Footer />
         {' '}
