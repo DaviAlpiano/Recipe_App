@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import APIConxtet from './APIContext';
-import { InfoSearchBar, MealType, DrinkType } from '../../types';
+import { InfoSearchBar, MealType, DrinkType } from '../../../types';
 
 type ThemeProviderProps = {
   children: React.ReactNode;

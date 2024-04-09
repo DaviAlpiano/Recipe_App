@@ -1,6 +1,6 @@
 import { createContext } from 'react';
-import { APIContextType } from '../../types';
+import { APIContextType } from '../../../types';
 
-const APIConxtet = createContext({} as APIContextType);
+const APIContext = createContext({} as APIContextType);
 
-export default APIConxtet;
+export default APIContext;

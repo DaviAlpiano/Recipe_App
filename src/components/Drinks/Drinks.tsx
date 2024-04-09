@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import APIContext from '../Context/ContextAPI/APIContext';
-import { DrinkType, MealCategory } from '../types';
+import { MealCategory, DrinkType } from '../../types';
 
 function Drinks() {
   const [drinks, setDrinks] = useState<DrinkType[]>([]);
