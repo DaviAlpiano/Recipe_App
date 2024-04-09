@@ -32,19 +32,23 @@ describe('Profile component', () => {
     );
 
     const doneRecipesButton = container.querySelector('[data-testid="profile-done-btn"]');
-    fireEvent.click(doneRecipesButton);
+    if (doneRecipesButton) {
+      fireEvent.click(doneRecipesButton);
+
+      fireEvent.click(doneRecipesButton);
+    }
 
     expect(window.location.pathname).toBe('/done-recipes');
   });
 
   test('redirects to favorite recipes page', () => {
-    const { container } = render(
+    render(
       <BrowserRouter>
         <Profile />
       </BrowserRouter>,
     );
 
-    const favoriteRecipesButton = container.querySelector('[data-testid="profile-favorite-btn"]');
+    const favoriteRecipesButton = screen.getByTestId('profile-favorite-btn');
     fireEvent.click(favoriteRecipesButton);
 
     expect(window.location.pathname).toBe('/favorite-recipes');
@@ -58,7 +62,9 @@ describe('Profile component', () => {
     );
 
     const logoutButton = container.querySelector('[data-testid="profile-logout-btn"]');
-    fireEvent.click(logoutButton);
+    if (logoutButton) {
+      fireEvent.click(logoutButton);
+    }
 
     expect(localStorage.getItem('user')).toBeNull();
     expect(window.location.pathname).toBe('/');

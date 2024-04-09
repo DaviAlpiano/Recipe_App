@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import APIContext from '../Context/ContextAPI/APIContext';
-import { InfoSearchBar, Meal, Drink } from '../types';
+import { InfoSearchBar, Meal, Drink } from '../../types';
 
 type APIContextWithText = {
   searchOption: (search: InfoSearchBar) => void;

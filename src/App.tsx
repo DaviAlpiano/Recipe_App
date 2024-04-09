@@ -9,8 +9,9 @@ import DoneRecipes from './components/DoneRecipes/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes/FavoriteRecipes';
 import Profile from './components/Profile/Profile';
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer'; // Importação do componente Footer
+import Footer from './components/Footer/Footer';
 import APIProvider from './components/Context/ContextAPI/APIProvider';
+import RecipeInProgress from './components/RecipeInProgress/RecipeInProgress';
 
 function App() {
   return (
@@ -67,9 +68,31 @@ function App() {
               </>
             ) }
           />
+          {/* Novas rotas */}
+          <Route
+            path="/meals/:id/in-progress"
+            element={ (
+              <>
+                <Header />
+                <RecipeInProgress />
+              </>
+            ) }
+          />
+          <Route
+            path="/drinks/:id/in-progress"
+            element={ (
+              <>
+                <Header />
+                <RecipeInProgress />
+              </>
+            ) }
+          />
+          {/* Fim das novas rotas */}
           <Route path="/drinks/:id" element={ <Header /> } />
           <Route path="/meals/:id" element={ <Header /> } />
           <Route path="/login/:id" element={ <Login /> } />
+          <Route path="/drinks/:id/in-progress" element={ <Header /> } />
+          <Route path="/meals/:id/in-progress" element={ <Header /> } />
           {/* outras rotas */}
         </Routes>
         <Footer />

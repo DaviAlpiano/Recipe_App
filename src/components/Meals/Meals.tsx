@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { MealType, MealCategory } from '../types';
+import { MealCategory, MealType } from '../../types';
 
 function Meals() {
   const [meals, setMeals] = useState<MealType[]>([]);
