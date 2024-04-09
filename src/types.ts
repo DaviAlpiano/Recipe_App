@@ -18,6 +18,18 @@ export interface Drink {
   strDrinkThumb: string;
 }
 
+export interface DoneRecipe {
+  id: string;
+  type: 'meal' | 'drink';
+  nationality: string;
+  category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
+  doneDate: string;
+  tags: string[];
+}
+
 // Define um tipo que pode ser tanto uma Meal quanto uma Drink
 export type MealOrDrink = Meal | Drink;
 
