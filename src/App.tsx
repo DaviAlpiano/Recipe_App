@@ -12,6 +12,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import APIProvider from './components/Context/ContextAPI/APIProvider';
 import RecipeInProgress from './components/RecipeInProgress/RecipeInProgress';
+import Recipes from './components/Recipes/Recipes';
 
 function App() {
   return (
@@ -22,6 +23,15 @@ function App() {
           <Route
             path="/"
             element={ <Login /> }
+          />
+          <Route
+            path="/recipes"
+            element={ (
+              <>
+                <Header />
+                <Recipes />
+              </>
+            ) }
           />
           <Route
             path="/meals"
