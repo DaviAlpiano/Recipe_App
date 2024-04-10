@@ -1,19 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-
-interface RecipeDetails {
-  // Defina as propriedades dos detalhes da receita conforme necessário
-  idMeal?: string;
-  strMeal?: string;
-  strInstructions?: string;
-  strMealThumb?: string;
-  idDrink?: string;
-  strDrink?: string;
-  strDrinkThumb?: string;
-}
+import { RecipeDetailsType } from '../../types';
+import './RecipeDetails.module.css';
 
 function RecipeDetails() {
-  const [recipeDetails, setRecipeDetails] = useState<RecipeDetails | null>(null);
+  const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType | null>(null);
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
 
@@ -25,7 +16,7 @@ function RecipeDetails() {
       } else if (location.pathname.includes('/drinks/')) {
         apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       } else {
-        return; // or handle unexpected path
+        return;
       }
 
       try {
@@ -41,18 +32,52 @@ function RecipeDetails() {
   }, [id, location.pathname]);
 
   if (!recipeDetails) {
-    return <div>Carregando...</div>; // ou algum componente de loading
+    return <div>Carregando...</div>;
   }
 
   return (
     <div>
-      <h1>{recipeDetails.strMeal || recipeDetails.strDrink}</h1>
+      <h1 data-testid="recipe-title">
+        {recipeDetails.strMeal || recipeDetails.strDrink}
+      </h1>
+      <p data-testid="recipe-category">
+        {recipeDetails.strCategory || recipeDetails.strAlcoholic}
+      </p>
+      <h3>Ingredients</h3>
+      <ul>
+        {Object.entries(recipeDetails)
+          .filter(([key, value]) => key.includes('strIngredient') && value)
+          .map(([key, value]) => (
+            <li
+              key={ key }
+              data-testid={ `${key}-ingredient-name-and-measure` }
+            >
+              {`${value} - ${recipeDetails[`strMeasure${key.slice(-1)}`]}`}
+            </li>
+          ))}
+      </ul>
       <img
+        data-testid="recipe-photo"
         src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
         alt={ recipeDetails.strMeal || recipeDetails.strDrink }
       />
-      <p>{recipeDetails.strInstructions}</p>
-      {/* Adicione mais detalhes da receita conforme necessário */}
+      <p data-testid="instructions">{recipeDetails.strInstructions}</p>
+      <video>
+        {recipeDetails.strYoutube && (
+          <source
+            data-testid="video"
+            src={ recipeDetails.strYoutube }
+            type="video/mp4"
+          />
+        )}
+        <track kind="captions" />
+      </video>
+      <button
+        data-testid="start-recipe-btn"
+        type="button"
+      >
+        Start Recipe
+      </button>
     </div>
   );
 }
