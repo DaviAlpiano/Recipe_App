@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import APIContext from '../Context/ContextAPI/APIContext';
 import { MealCategory, DrinkType } from '../../types';
+import Footer from '../Footer/Footer';
 
 function Drinks() {
   const [drinks, setDrinks] = useState<DrinkType[]>([]);
@@ -90,6 +91,7 @@ function Drinks() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

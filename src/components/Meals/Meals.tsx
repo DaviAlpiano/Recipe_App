@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MealCategory, MealType } from '../../types';
+import Footer from '../Footer/Footer';
 
 function Meals() {
   const [meals, setMeals] = useState<MealType[]>([]);
@@ -95,6 +96,7 @@ function Meals() {
           </div>
         ))}
       </div>
+      <Footer />
     </div>
   );
 }

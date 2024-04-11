@@ -9,6 +9,7 @@ import DoneRecipes from './components/DoneRecipes/DoneRecipes';
 import FavoriteRecipes from './components/FavoriteRecipes/FavoriteRecipes';
 import Profile from './components/Profile/Profile';
 import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
 import APIProvider from './components/Context/ContextAPI/APIProvider';
 import RecipeDetails from './components/RecipeDetails/RecipeDetails';
 import RecipeInProgress from './components/RecipeInProgress/RecipeInProgress';
