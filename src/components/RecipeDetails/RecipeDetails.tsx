@@ -122,16 +122,14 @@ function RecipeDetails() {
         type="button"
         onClick={ () => handleFavoriteRecipe(recipeDetails) }
       >
-        <div>
-          {iconFavor ? <img
-            src="/blackHeartIcon.svg"
-            alt="Favorite"
-          />
-            : <img
-                src="/whiteHeartIcon.svg"
-                alt="Favorite"
-            />}
-        </div>
+        {iconFavor ? <img
+          src={ blackHeartIcon }
+          alt="Favorite"
+        />
+          : <img
+              src={ whiteHeartIcon }
+              alt="Favorite"
+          />}
       </button>
 
       <p data-testid="instructions">{recipeDetails.strInstructions}</p>
