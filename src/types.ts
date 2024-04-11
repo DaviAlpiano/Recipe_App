@@ -4,6 +4,12 @@ export interface User {
   email: string;
 }
 
+export type InfoCaroselType = {
+  id: string,
+  str: string,
+  strThumb: string,
+};
+
 export interface RecipeDetailsType {
   // Defina as propriedades dos detalhes da receita conforme necessário
   idMeal?: string;

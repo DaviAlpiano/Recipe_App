@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import { RecipeDetailsType } from '../../types';
 import './RecipeDetails.module.css';
+import Carrosel from '../Carrosel/Carrosel';
 
 function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType | null>(null);
@@ -37,6 +38,7 @@ function RecipeDetails() {
 
   return (
     <div>
+      <Carrosel pathname={ location.pathname } />
       <h1 data-testid="recipe-title">
         {recipeDetails.strMeal || recipeDetails.strDrink}
       </h1>

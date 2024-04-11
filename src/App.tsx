@@ -98,8 +98,24 @@ function App() {
             ) }
           />
           {/* Fim das novas rotas */}
-          <Route path="/drinks/:id" element={ <RecipeDetails /> } />
-          <Route path="/meals/:id" element={ <RecipeDetails /> } />
+          <Route
+            path="/drinks/:id"
+            element={
+              <>
+                <Header />
+                <RecipeDetails />
+              </>
+           }
+          />
+          <Route
+            path="/meals/:id"
+            element={
+              <>
+                <Header />
+                <RecipeDetails />
+              </>
+}
+          />
           <Route path="/login/:id" element={ <Login /> } />
           <Route path="/drinks/:id/in-progress" element={ <Header /> } />
           <Route path="/meals/:id/in-progress" element={ <Header /> } />
