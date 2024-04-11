@@ -133,6 +133,7 @@ function RecipeDetails() {
             />}
         </div>
       </button>
+
       <p data-testid="instructions">{recipeDetails.strInstructions}</p>
       <video>
         {recipeDetails.strYoutube && (
