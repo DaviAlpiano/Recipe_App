@@ -11,7 +11,7 @@
 .itemCar {
     flex: 0 0 auto;
     scroll-snap-align: start;
-    width: 50%; /* Ajuste a largura para mostrar apenas dois itens */
+    width: 50%;
     background-color: #f0f0f0;
     border-radius: 8px;
     padding: 10px;
