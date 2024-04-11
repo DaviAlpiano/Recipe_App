@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { RecipeDetailsType } from '../../types';
+import Carrosel from '../Carrosel/Carrosel';
 import styles from './RecipeDetails.module.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
@@ -82,6 +83,7 @@ function RecipeDetails() {
 
   return (
     <div>
+      <Carrosel pathname={ location.pathname } />
       <h1 data-testid="recipe-title">
         {recipeDetails.strMeal || recipeDetails.strDrink}
       </h1>
