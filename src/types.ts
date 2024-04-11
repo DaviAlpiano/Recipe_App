@@ -10,6 +10,7 @@ export interface RecipeDetailsType {
   strMeal?: string;
   strInstructions?: string;
   strMealThumb?: string;
+  strArea?: string;
   idDrink?: string;
   strDrink?: string;
   strDrinkThumb?: string;

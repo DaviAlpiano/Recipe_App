@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
 import { RecipeDetailsType } from '../../types';
 import styles from './RecipeDetails.module.css';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType | null>(null);
   const [shared, setShared] = useState('');
+  const [iconFavor, setIconFavor] = useState(false);
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
 
@@ -43,6 +46,33 @@ function RecipeDetails() {
       setShared('');
     }, 3000);
   }
+
+  const handleFavoriteRecipe = (favorRecipe: unknown) => {
+    const recp = favorRecipe as any;
+    const recipeToLocalStorage = {
+      id: recp?.idMeal || recp?.idDrink,
+      type: recp?.idMeal ? 'meal' : 'drink',
+      nationality: recp?.strArea ?? '',
+      category: recp?.strCategory,
+      alcoholicOrNot: recp?.strAlcoholic ?? '',
+      name: recp?.strMeal || recp?.strDrink,
+      image: recp?.strMealThumb || recp?.strDrinkThumb,
+    };
+    const recipeFromLocalStorage = JSON.parse(localStorage
+      .getItem('favoriteRecipes') || '[]');
+    const favorOrNot = recipeFromLocalStorage
+      .findIndex((recipeFLS: any) => recipeFLS.id === recipeToLocalStorage.id);
+
+    if (favorOrNot !== -1) {
+      recipeFromLocalStorage.splice(favorOrNot, 1);
+      setIconFavor(false);
+    } else {
+      recipeFromLocalStorage.push(recipeToLocalStorage);
+      setIconFavor(true);
+    }
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(recipeFromLocalStorage));
+  };
 
   const drinkOrMeal = location.pathname.includes('/meals/') ? 'Meal' : 'Drink';
 
@@ -90,8 +120,18 @@ function RecipeDetails() {
       <button
         data-testid="favorite-btn"
         type="button"
+        onClick={ () => handleFavoriteRecipe(recipeDetails) }
       >
-        Favorite
+        <div>
+          {iconFavor ? <img
+            src="/blackHeartIcon.svg"
+            alt="Favorite"
+          />
+            : <img
+                src="/whiteHeartIcon.svg"
+                alt="Favorite"
+            />}
+        </div>
       </button>
 
       <p data-testid="instructions">{recipeDetails.strInstructions}</p>
