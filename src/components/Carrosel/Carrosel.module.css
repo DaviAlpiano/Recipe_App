@@ -1,20 +1,20 @@
 .carrosel {
   display: flex;
-  overflow-x: scroll;
-  scroll-snap-type: x mandatory;
-  width: 350px;
-  padding: 10px;
   gap: 25px;
   height: 200px;
+  overflow-x: scroll;
+  padding: 10px;
+  scroll-snap-type: x mandatory;
+  width: 350px;
 }
 
 .itemCar {
-  flex: 0 0 auto;
-  scroll-snap-align: start;
   background-color: #f0f0f0;
-  width: 50%;
   border-radius: 8px;
+  flex: 0 0 auto;
   padding: 10px;
+  scroll-snap-align: start;
+  width: 50%;
 }
 
 .img {
