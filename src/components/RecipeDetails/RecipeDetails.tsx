@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams, useLocation, Link } from 'react-router-dom';
 import { RecipeDetailsType } from '../../types';
 import './RecipeDetails.module.css';
 import Carrosel from '../Carrosel/Carrosel';
+import styles from './RecipeDetails.module.css';
+import blackHeartIcon from '../../images/blackHeartIcon.svg';
+import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 
 function RecipeDetails() {
   const [recipeDetails, setRecipeDetails] = useState<RecipeDetailsType | null>(null);
+  const [shared, setShared] = useState('');
+  const [iconFavor, setIconFavor] = useState(false);
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
 
@@ -32,6 +37,47 @@ function RecipeDetails() {
     fetchRecipeDetails();
   }, [id, location.pathname]);
 
+  const handleShareClick = () => {
+    navigator.clipboard.writeText(window.location.href);
+    setShared('Link copied!');
+  };
+
+  if (shared) {
+    <p>{shared}</p>;
+    setTimeout(() => {
+      setShared('');
+    }, 3000);
+  }
+
+  const handleFavoriteRecipe = (favorRecipe: unknown) => {
+    const recp = favorRecipe as any;
+    const recipeToLocalStorage = {
+      id: recp?.idMeal || recp?.idDrink,
+      type: recp?.idMeal ? 'meal' : 'drink',
+      nationality: recp?.strArea ?? '',
+      category: recp?.strCategory,
+      alcoholicOrNot: recp?.strAlcoholic ?? '',
+      name: recp?.strMeal || recp?.strDrink,
+      image: recp?.strMealThumb || recp?.strDrinkThumb,
+    };
+    const recipeFromLocalStorage = JSON.parse(localStorage
+      .getItem('favoriteRecipes') || '[]');
+    const favorOrNot = recipeFromLocalStorage
+      .findIndex((recipeFLS: any) => recipeFLS.id === recipeToLocalStorage.id);
+
+    if (favorOrNot !== -1) {
+      recipeFromLocalStorage.splice(favorOrNot, 1);
+      setIconFavor(false);
+    } else {
+      recipeFromLocalStorage.push(recipeToLocalStorage);
+      setIconFavor(true);
+    }
+
+    localStorage.setItem('favoriteRecipes', JSON.stringify(recipeFromLocalStorage));
+  };
+
+  const drinkOrMeal = location.pathname.includes('/meals/') ? 'Meal' : 'Drink';
+
   if (!recipeDetails) {
     return <div>Carregando...</div>;
   }
@@ -43,18 +89,18 @@ function RecipeDetails() {
         {recipeDetails.strMeal || recipeDetails.strDrink}
       </h1>
       <p data-testid="recipe-category">
-        {recipeDetails.strCategory || recipeDetails.strAlcoholic}
+        { drinkOrMeal === 'Meal' ? recipeDetails.strCategory : recipeDetails.strAlcoholic}
       </p>
       <h3>Ingredients</h3>
       <ul>
         {Object.entries(recipeDetails)
           .filter(([key, value]) => key.includes('strIngredient') && value)
-          .map(([key, value]) => (
+          .map((ingredient, index) => (
             <li
-              key={ key }
-              data-testid={ `${key}-ingredient-name-and-measure` }
+              key={ index }
+              data-testid={ `${index}-ingredient-name-and-measure` }
             >
-              {`${value} - ${recipeDetails[`strMeasure${key.slice(-1)}`]}`}
+              {`${ingredient[1]} - ${recipeDetails[`strMeasure${index + 1}`]} `}
             </li>
           ))}
       </ul>
@@ -63,6 +109,34 @@ function RecipeDetails() {
         src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
         alt={ recipeDetails.strMeal || recipeDetails.strDrink }
       />
+
+      <button
+        data-testid="share-btn"
+        type="button"
+        onClick={ handleShareClick }
+      >
+        <div>
+          {shared || 'Share'}
+        </div>
+      </button>
+
+      <button
+        data-testid="favorite-btn"
+        type="button"
+        onClick={ () => handleFavoriteRecipe(recipeDetails) }
+      >
+        <div>
+          {iconFavor ? <img
+            src="/blackHeartIcon.svg"
+            alt="Favorite"
+          />
+            : <img
+                src="/whiteHeartIcon.svg"
+                alt="Favorite"
+            />}
+        </div>
+      </button>
+
       <p data-testid="instructions">{recipeDetails.strInstructions}</p>
       <video>
         {recipeDetails.strYoutube && (
@@ -74,12 +148,15 @@ function RecipeDetails() {
         )}
         <track kind="captions" />
       </video>
-      <button
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Start Recipe
-      </button>
+      <Link to={ `${location.pathname}/in-progress` }>
+        <button
+          data-testid="start-recipe-btn"
+          type="button"
+          className={ styles.button }
+        >
+          Start Recipe
+        </button>
+      </Link>
     </div>
   );
 }
