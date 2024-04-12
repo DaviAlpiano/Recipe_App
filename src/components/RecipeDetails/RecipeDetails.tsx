@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation, Link } from 'react-router-dom';
-import { RecipeDetailsType } from '../../types';
+import { DrinkType, MealType, RecipeDetailsType } from '../../types';
 import Carrosel from '../Carrosel/Carrosel';
 import styles from './RecipeDetails.module.css';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
@@ -12,13 +12,16 @@ function RecipeDetails() {
   const [iconFavor, setIconFavor] = useState(false);
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
+  const [idStorage, setIdStorage] = useState<string>('');
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       let apiUrl;
       if (location.pathname.includes('/meals/')) {
+        setIdStorage('idMeal');
         apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       } else if (location.pathname.includes('/drinks/')) {
+        setIdStorage('idDrink');
         apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
       } else {
         return;
@@ -35,6 +38,18 @@ function RecipeDetails() {
 
     fetchRecipeDetails();
   }, [id, location.pathname]);
+
+  useEffect(() => {
+    const localS: DrinkType[] | MealType[] = JSON
+      .parse(localStorage.getItem('favoriteRecipes'));
+
+    if (localS !== null && recipeDetails) {
+      const tOrF = localS.some((item) => item.id === recipeDetails[idStorage]);
+      setIconFavor(tOrF);
+    } else {
+      setIconFavor(false);
+    }
+  }, [recipeDetails]);
 
   const handleShareClick = () => {
     navigator.clipboard.writeText(window.location.href);
@@ -119,20 +134,20 @@ function RecipeDetails() {
         </div>
       </button>
 
-      <button
-        data-testid="favorite-btn"
-        type="button"
+      {iconFavor ? <input
         onClick={ () => handleFavoriteRecipe(recipeDetails) }
-      >
-        {iconFavor ? <img
-          src={ blackHeartIcon }
-          alt="Favorite"
-        />
-          : <img
-              src={ whiteHeartIcon }
-              alt="Favorite"
-          />}
-      </button>
+        type="image"
+        data-testid="favorite-btn"
+        src={ blackHeartIcon }
+        alt="Favorite"
+      />
+        : <input
+            onClick={ () => handleFavoriteRecipe(recipeDetails) }
+            type="image"
+            data-testid="favorite-btn"
+            src={ whiteHeartIcon }
+            alt="Favorite"
+        />}
 
       <p data-testid="instructions">{recipeDetails.strInstructions}</p>
       <video>
