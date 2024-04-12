@@ -179,3 +179,15 @@ export interface DrinkRecipeDetType extends RecipeDataType {
 }
 
 export type RecipeFetchOptionsType = 'drinks' | 'meals';
+
+export type FavoriteRecipe = {
+  id: string;
+  type: string; // 'meal' ou 'drink'
+  nationality: string;
+  category: string;
+  alcoholicOrNot: string;
+  name: string;
+  image: string;
+  doneDate: string;
+  tags: string[];
+};
