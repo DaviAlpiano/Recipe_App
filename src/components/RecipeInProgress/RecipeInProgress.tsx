@@ -1,74 +1,232 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
-import APIContext from '../Context/ContextAPI/APIContext';
-import { MealType, DrinkType, Meal, Drink } from '../../types';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Recipe } from '../../types';
+import './RecipeInProgress.css';
+
+export const createMealRecipe = (receita: Recipe) => {
+  return {
+    id: receita.idMeal,
+    nationality: receita.strArea,
+    name: receita.strMeal,
+    category: receita.strCategory,
+    image: receita.strMealThumb,
+    tags: receita.strTags ? receita.strTags.split(',') : [],
+    alcoholicOrNot: receita.strAlcoholic || '',
+    type: 'meal',
+    doneDate: new Date(),
+  };
+};
 
 function RecipeInProgress() {
-  const { id } = useParams();
-  const { foods } = useContext(APIContext);
-  const [recipe, setRecipe] = useState<Meal | Drink | undefined>();
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const [checkedIngredients, setCheckedIngredients] = useState<string[]>([]);
+  const [copyMessage, setCopyMessage] = useState<string | null>(null);
+  const [isFavorited, setIsFavorited] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const foundRecipe = foods.find((item) => (
-      (item as MealType).idMeal === id || (item as DrinkType).idDrink === id
-    ));
-    setRecipe(foundRecipe as Meal | Drink | undefined);
-  }, [id, foods]);
+    const fetchRecipe = async () => {
+      let url = '';
+      if (location.pathname.includes('/meals')) {
+        url = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
+      } else if (location.pathname.includes('/drinks')) {
+        url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
+      }
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+        console.log(data);
+        const recipeData = location.pathname.includes('/meals')
+          ? data.meals[0] : data.drinks[0];
+        setRecipe(recipeData);
+      } catch (error) {
+        console.error('Erro ao buscar receita:', error);
+      }
+    };
+    fetchRecipe();
+  }, [id, location.pathname]);
+
+  useEffect(() => {
+    const savedIngredients = localStorage.getItem('inProgressRecipes');
+    if (savedIngredients) {
+      setCheckedIngredients(JSON.parse(savedIngredients));
+    }
+  }, [id]);
+
+  useEffect(() => {
+    localStorage.setItem('inProgressRecipes', JSON.stringify(checkedIngredients));
+  }, [checkedIngredients, id]);
+
+  const handleCheck = (ingredient: string) => {
+    if (checkedIngredients.includes(ingredient)) {
+      setCheckedIngredients(checkedIngredients.filter((item) => item !== ingredient));
+    } else {
+      setCheckedIngredients([...checkedIngredients, ingredient]);
+    }
+  };
+
+  const copyLink = () => {
+    let url = window.location.href;
+    url = url.replace('/in-progress', '');
+    navigator.clipboard.writeText(url);
+    setCopyMessage('Link copied!');
+  };
+
+  const favoriteRecipe = () => {
+    if (recipe) {
+      const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+      let newRecipe;
+      if (location.pathname.includes('/meals')) {
+        newRecipe = {
+          id: recipe.idMeal,
+          type: 'meal',
+          nationality: recipe.strArea,
+          category: recipe.strCategory,
+          alcoholicOrNot: recipe.strAlcoholic || '',
+          name: recipe.strMeal,
+          image: recipe.strMealThumb,
+        };
+      } else if (location.pathname.includes('/drinks')) {
+        newRecipe = {
+          id: recipe.idDrink,
+          type: 'drink',
+          nationality: '',
+          category: recipe.strCategory,
+          alcoholicOrNot: recipe.strAlcoholic || '',
+          name: recipe.strDrink,
+          image: recipe.strDrinkThumb,
+        };
+      }
+      if (newRecipe) {
+        favoriteRecipes.push(newRecipe);
+        localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+      }
+    }
+  };
+
+  const unfavoriteRecipe = () => {
+    let favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    favoriteRecipes = favoriteRecipes.filter((receita: Recipe) => receita.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(favoriteRecipes));
+  };
+
+  const isFoodFavorited = () => {
+    const favoriteRecipes = JSON.parse(localStorage.getItem('favoriteRecipes') || '[]');
+    return favoriteRecipes.some((receita: Recipe) => receita.id === id);
+  };
+
+  useEffect(() => {
+    setIsFavorited(isFoodFavorited());
+  }, [id]);
+
+  const toggleFavorite = () => {
+    if (isFavorited) {
+      unfavoriteRecipe();
+    } else {
+      favoriteRecipe();
+    }
+    setIsFavorited(!isFavorited);
+  };
+
+  const allIngredientsChecked = () => {
+    if (recipe) {
+      const ingredients = Object.keys(recipe)
+        .filter((key) => key.startsWith('strIngredient') && recipe[key])
+        .map((key) => recipe[key] as string);
+      return ingredients.every((ingredient) => checkedIngredients.includes(ingredient));
+    }
+    return false;
+  };
+
+  const createDrinkRecipe = (receita: Recipe) => {
+    return {
+      alcoholicOrNot: receita.strAlcoholic || '',
+      category: receita.strCategory,
+      doneDate: new Date(),
+      id: receita.idDrink,
+      image: receita.strDrinkThumb,
+      name: receita.strDrink,
+      nationality: receita.strArea || '',
+      tags: receita.strTags ? receita.strTags.split(',') : [],
+      type: 'drink',
+    };
+  };
+
+  const finishRecipe = () => {
+    if (recipe) {
+      const doneRecipes = JSON.parse(localStorage.getItem('doneRecipes') || '[]');
+      let newRecipe;
+      if (location.pathname.includes('/meals')) {
+        newRecipe = createMealRecipe(recipe);
+      } else {
+        newRecipe = createDrinkRecipe(recipe);
+      }
+      if (newRecipe) {
+        const newRecipies = [...doneRecipes, newRecipe];
+        localStorage.setItem('doneRecipes', JSON.stringify(newRecipies));
+        navigate('/done-recipes');
+      }
+    }
+  };
 
   if (!recipe) {
-    return <div>Carregando...</div>;
+    return <div>Loading...</div>;
   }
-
-  // Verifica se a receita é uma refeição ou uma bebida
-  const isMeal = (recipe as Meal).strMeal !== undefined;
 
   return (
     <div>
-      {/* Imagem da receita */}
       <img
-        src={ isMeal ? (recipe as Meal).strMealThumb : (recipe as Drink).strDrinkThumb }
-        alt="Recipe"
+        src={ recipe.strMealThumb || recipe.strDrinkThumb }
+        alt={ recipe.strMeal || recipe.strDrink }
         data-testid="recipe-photo"
       />
-
-      {/* Título da receita */}
-      <h2 data-testid="recipe-title">
-        {
-      isMeal ? (recipe as Meal).strMeal : (recipe as Drink).strDrink
-}
-      </h2>
-
-      {/* Categoria (apenas para comidas) */}
-      { isMeal
-      && (recipe as Meal).strCategory
-      && <p data-testid="recipe-category">{(recipe as Meal).strCategory}</p>}
-
-      {/* Se é alcoólico (apenas para bebidas) */}
-      { !isMeal
-      && (recipe as Drink).strAlcoholic
-      && <p data-testid="recipe-alcoholic">{(recipe as Drink).strAlcoholic}</p>}
-
-      {/* Lista de ingredientes com quantidades */}
-      <ul data-testid="recipe-ingredients">
-        {/* Mapeie os ingredientes e suas quantidades */}
+      <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
+      <p data-testid="recipe-category">{recipe.strCategory}</p>
+      {recipe.strAlcoholic && <p>{recipe.strAlcoholic}</p>}
+      <ul>
         {Object.keys(recipe)
-          .filter((key) => key.startsWith('strIngredient')
-          && recipe[key as keyof (Meal | Drink)])
-          .map((key) => (
-            <li key={ key } data-testid={ `${key}-ingredient` }>
-              {recipe[key as keyof (Meal | Drink)]}
-              {' '}
-              -
-              {recipe[`strMeasure${key.slice(12)}` as keyof (Meal | Drink)]}
-            </li>
-          ))}
+          .filter((key) => key.startsWith('strIngredient') && recipe[key])
+          .map((key, index) => {
+            const ingredient = recipe[key] as string;
+            return (
+              <li key={ key }>
+                <label
+                  data-testid={ `${index}-ingredient-step` }
+                  className={ checkedIngredients.includes(
+                    ingredient,
+                  ) ? 'checked-ingredient' : '' }
+                >
+                  <input
+                    type="checkbox"
+                    onChange={ () => handleCheck(ingredient) }
+                    checked={ checkedIngredients.includes(ingredient) }
+                  />
+                  <span>{ingredient}</span>
+                </label>
+              </li>
+            );
+          })}
       </ul>
-
-      {/* Instruções */}
-      <p data-testid="instructions">
-        { isMeal
-          ? (recipe as Meal).strInstructions : (recipe as Drink).strInstructions }
-      </p>
+      <p data-testid="instructions">{recipe.strInstructions}</p>
+      <button data-testid="share-btn" onClick={ copyLink }>Compartilhar</button>
+      {copyMessage && <p>{copyMessage}</p>}
+      <button onClick={ toggleFavorite }>
+        <img
+          data-testid="favorite-btn"
+          src={ isFoodFavorited() ? '/src/images/blackHeartIcon.svg'
+            : '/src/images/whiteHeartIcon.svg' }
+          alt="Favorito"
+        />
+      </button>
+      <button
+        data-testid="finish-recipe-btn"
+        disabled={ !allIngredientsChecked() }
+        onClick={ finishRecipe }
+      >
+        Finalizar Receita
+      </button>
     </div>
   );
 }
