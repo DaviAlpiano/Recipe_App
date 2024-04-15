@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import shareIcon from '../../images/shareIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import { FavoriteRecipe } from '../../types';
+import style from './FavoriteRecipes.module.css';
 
 function FavoriteRecipes() {
   const [favoriteRecipes, setFavoriteRecipes] = useState<FavoriteRecipe[]>([]);
@@ -69,6 +70,7 @@ function FavoriteRecipes() {
         <div key={ recipe.id } className="recipe-card">
           <Link to={ `/${recipe.type}s/${recipe.id}` }>
             <img
+              className={ style.img }
               src={ recipe.image }
               alt={ `${recipe.name} recipe` }
               data-testid={ `${index}-horizontal-image` }
