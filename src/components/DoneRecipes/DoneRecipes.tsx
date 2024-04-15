@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'; // Importa o componente Link do react-router-dom
 import shareIcon from '../../images/shareIcon.svg'; // Certifique-se de que o caminho está correto
+import style from './DoneRecipes.module.css';
 
 // Tipo para representar a receita feita
 type DoneRecipe = {
@@ -67,6 +68,7 @@ function DoneRecipes() {
           {/* Link envolvendo a imagem */}
           <Link to={ `/${recipe.type}s/${recipe.id}` }>
             <img
+              className={ style.img }
               src={ recipe.image }
               alt={ `${recipe.name} recipe` }
               data-testid={ `${index}-horizontal-image` }
