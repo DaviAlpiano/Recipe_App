@@ -13,6 +13,7 @@ function RecipeDetails() {
   const { id } = useParams<{ id: string }>();
   const location = useLocation();
   const [idStorage, setIdStorage] = useState<string>('');
+  const [inProgress, setInProgress] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
@@ -36,6 +37,17 @@ function RecipeDetails() {
       }
     };
 
+    const localS = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    if (localS) {
+      if (location.pathname.includes('meals')) {
+        const tOrF = id in localS.meals;
+        setInProgress(tOrF);
+      }
+      if (location.pathname.includes('drinks')) {
+        const tOrF = id in localS.drinks;
+        setInProgress(tOrF);
+      }
+    }
     fetchRecipeDetails();
   }, [id, location.pathname]);
 
@@ -166,7 +178,7 @@ function RecipeDetails() {
           type="button"
           className={ styles.button }
         >
-          Start Recipe
+          {inProgress ? 'Continue Recipe' : 'Start Recipe'}
         </button>
       </Link>
     </div>
