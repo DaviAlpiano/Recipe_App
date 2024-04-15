@@ -87,6 +87,7 @@ function FavoriteRecipes() {
               ? `${recipe.nationality} - ${recipe.category}`
               : `${recipe.alcoholicOrNot} - ${recipe.category}`}
           </p>
+
           <button onClick={ () => handleShareClick(`http://localhost:3000/${recipe.type}s/${recipe.id}`) } className="share-btn">
             <img
               src={ shareIcon }
