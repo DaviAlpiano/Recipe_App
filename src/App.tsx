@@ -18,86 +18,62 @@ function App() {
   return (
     <APIProvider>
       <Router>
-        {/* Header e Footer serão renderizados em todas as páginas, mas Header é condicional dentro de cada rota, se necessário */}
         <Routes>
-          <Route
-            path="/"
-            element={ <Login /> }
-          />
+          <Route path="/" element={ <Login /> } />
           <Route
             path="/recipes"
-            element={ (
+            element={
               <>
                 <Header />
                 <Recipes />
               </>
-            ) }
+            }
           />
           <Route
             path="/meals"
-            element={ (
+            element={
               <>
                 <Header />
                 <Meals />
               </>
-            ) }
+            }
           />
           <Route
             path="/drinks"
-            element={ (
+            element={
               <>
                 <Header />
                 <Drinks />
               </>
-            ) }
+            }
           />
           <Route
             path="/profile"
-            element={ (
+            element={
               <>
                 <Header />
                 <Profile />
               </>
-            ) }
+            }
           />
           <Route
             path="/done-recipes"
-            element={ (
+            element={
               <>
                 <Header />
                 <DoneRecipes />
               </>
-            ) }
+            }
           />
           <Route
             path="/favorite-recipes"
-            element={ (
+            element={
               <>
                 <Header />
                 <FavoriteRecipes />
               </>
-            ) }
+            }
           />
-          {/* Novas rotas */}
-          <Route
-            path="/meals/:id/in-progress"
-            element={ (
-              <>
-                <Header />
-                <RecipeInProgress />
-              </>
-            ) }
-          />
-          <Route
-            path="/drinks/:id/in-progress"
-            element={ (
-              <>
-                <Header />
-                <RecipeInProgress />
-              </>
-            ) }
-          />
-          {/* Fim das novas rotas */}
           <Route
             path="/drinks/:id"
             element={
@@ -105,7 +81,7 @@ function App() {
                 <Header />
                 <RecipeDetails />
               </>
-           }
+            }
           />
           <Route
             path="/meals/:id"
@@ -114,12 +90,27 @@ function App() {
                 <Header />
                 <RecipeDetails />
               </>
-}
+            }
+          />
+          <Route
+            path="/meals/:id/in-progress"
+            element={
+              <>
+                <Header />
+                <RecipeInProgress />
+              </>
+            }
+          />
+          <Route
+            path="/drinks/:id/in-progress"
+            element={
+              <>
+                <Header />
+                <RecipeInProgress />
+              </>
+            }
           />
           <Route path="/login/:id" element={ <Login /> } />
-          <Route path="/drinks/:id/in-progress" element={ <Header /> } />
-          <Route path="/meals/:id/in-progress" element={ <Header /> } />
-          {/* outras rotas */}
         </Routes>
       </Router>
     </APIProvider>
