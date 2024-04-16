@@ -17,15 +17,13 @@ function RecipeDetails() {
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
-      let apiUrl;
+      let apiUrl = '';
       if (location.pathname.includes('/meals/')) {
         setIdStorage('idMeal');
         apiUrl = `https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`;
       } else if (location.pathname.includes('/drinks/')) {
         setIdStorage('idDrink');
         apiUrl = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
-      } else {
-        return;
       }
 
       try {
@@ -86,6 +84,7 @@ function RecipeDetails() {
       name: recp?.strMeal || recp?.strDrink,
       image: recp?.strMealThumb || recp?.strDrinkThumb,
     };
+
     const recipeFromLocalStorage = JSON.parse(localStorage
       .getItem('favoriteRecipes') || '[]');
     const favorOrNot = recipeFromLocalStorage
