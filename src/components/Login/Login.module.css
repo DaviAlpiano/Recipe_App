@@ -1,0 +1,60 @@
+.main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50vh;
+  width: 70vh;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+input {
+  border: none;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+.user {
+  border: solid black 1px;
+  background-color: white;
+  border-radius: 10px;
+  width: 35vh;
+  padding: 5px;
+}
+
+.logo {
+  animation: shake 1.5s infinite ease;
+  height: 20vh;
+  width: 20vh;
+  border-radius: 100px;
+}
+
+.button {
+  width: 15vh;
+  background-color: #f5edcf;
+  border-radius: 10px;
+  transform: scale(1.2);
+}
+
+@keyframes shake {
+
+  0% {
+    transform: rotate(5deg);
+  }
+
+  50% {
+    transform: rotate(-5deg);
+  }
+
+  100% {
+    transform: rotate(5deg);
+  }
+}
