@@ -30,3 +30,7 @@ body {
 button:hover {
   cursor: pointer;
 }
+
+label:hover {
+  cursor: pointer;
+}

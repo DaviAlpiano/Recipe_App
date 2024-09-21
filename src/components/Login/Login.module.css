@@ -11,7 +11,7 @@
   padding: 10px;
 }
 
-input {
+.input {
   border: none;
   width: 100%;
 }
@@ -42,6 +42,7 @@ input {
 .button {
   width: 15vh;
   height: 2.5vh;
+  font-size: 1.5vh;
   background-color: #f5edcf;
   border-radius: 10px;
   transform: scale(1.3);

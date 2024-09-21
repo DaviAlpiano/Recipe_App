@@ -61,6 +61,7 @@ function Login() {
         {/* Campo de entrada de email */}
         <div className={ style.user }>
           <input
+            className={ style.input }
             placeholder="Email"
             type="email"
             id="email"
@@ -72,6 +73,7 @@ function Login() {
         {/* Campo de entrada de senha */}
         <div className={ style.user }>
           <input
+            className={ style.input }
             placeholder="Password"
             type="password"
             id="password"
