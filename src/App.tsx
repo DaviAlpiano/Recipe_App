@@ -1,6 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import Login from './components/Login/Login';
 import Meals from './components/Meals/Meals';
 import Drinks from './components/Drinks/Drinks';
@@ -12,6 +11,7 @@ import APIProvider from './components/Context/ContextAPI/APIProvider';
 import RecipeDetails from './components/RecipeDetails/RecipeDetails';
 import RecipeInProgress from './components/RecipeInProgress/RecipeInProgress';
 import Recipes from './components/Recipes/Recipes';
+import Footer from './components/Footer/Footer';
 
 function App() {
   return (
@@ -34,6 +34,7 @@ function App() {
               <>
                 <Header />
                 <Meals />
+                <Footer />
               </>
             }
           />

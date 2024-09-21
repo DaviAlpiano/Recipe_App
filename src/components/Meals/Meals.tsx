@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { MealCategory, MealType } from '../../types';
-import Footer from '../Footer/Footer';
+import style from './Meals.module.css';
 
 function Meals() {
   const [meals, setMeals] = useState<MealType[]>([]);
@@ -57,8 +57,11 @@ function Meals() {
   };
 
   return (
-    <div>
-      <div className="category-buttons">
+    <main className={ style.main }>
+      <div
+        id={ style.buttons }
+        className="category-buttons"
+      >
         <button
           data-testid="All-category-filter"
           onClick={ () => setSelectedCategory(null) }
@@ -76,9 +79,13 @@ function Meals() {
           </button>
         ))}
       </div>
-      <div className="meals-container">
+      <div
+        id={ style.meals }
+        className="meals-container"
+      >
         {meals.map((meal, index) => (
           <div
+            className={ style.meal }
             key={ meal.idMeal }
             data-testid={ `${index}-recipe-card` }
             onClick={ () => handleRecipeClick(meal.idMeal) }
@@ -96,8 +103,7 @@ function Meals() {
           </div>
         ))}
       </div>
-      <Footer />
-    </div>
+    </main>
   );
 }
 

@@ -4,16 +4,29 @@
 }
 
 html {
-  background-color: #f5edcf;
+  height: 100% !important;
+  background-color: #FFFFFF;
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  height: 100%;
   background-image: url('src/images/fundo.png');
 }
 
 body {
-  margin: 0;
-  background-color: #00000030 !important;
-  border-radius: 20px;
+  height: 100% !important;
+  width: 100%;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+button:hover {
+  cursor: pointer;
 }

@@ -1,7 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import style from './Login.module.css';
-import logo from '../../images/logo.png'
+import logo from '../../images/logo.png';
 
 function Login() {
   // Obtém a função de navegação do React Router
@@ -50,16 +50,18 @@ function Login() {
   }
 
   return (
-    <main className={style.main}>
-      <img className={style.logo} src={logo} alt="logo" />
+    <main className={ style.main }>
+      <img className={ style.logo } src={ logo } alt="logo" />
       {/* Formulário de login */}
-      <form data-testid="login-form"
-        className= {style.form}
-        onSubmit={ handleSubmit }>
+      <form
+        data-testid="login-form"
+        className={ style.form }
+        onSubmit={ handleSubmit }
+      >
         {/* Campo de entrada de email */}
-        <div className={style.user}>
+        <div className={ style.user }>
           <input
-            placeholder='Email'
+            placeholder="Email"
             type="email"
             id="email"
             value={ email }
@@ -68,9 +70,9 @@ function Login() {
           />
         </div>
         {/* Campo de entrada de senha */}
-        <div className={style.user}>
+        <div className={ style.user }>
           <input
-            placeholder='Password'
+            placeholder="Password"
             type="password"
             id="password"
             value={ password }
@@ -81,9 +83,10 @@ function Login() {
         {/* Botão de submissão do formulário de login */}
         <button
           type="submit"
-          className={style.button}
+          className={ style.button }
           disabled={ !formValid }
-          data-testid="login-submit-btn">
+          data-testid="login-submit-btn"
+        >
           Login
         </button>
       </form>

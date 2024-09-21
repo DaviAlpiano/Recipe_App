@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 import SearchBar from '../SearchBar/SearchBar';
+import style from './Header.module.css';
 
 function Header() {
   const [isSearchVisible, setIsSearchVisible] = useState(false); // Estado para controlar a visibilidade (Davi)
@@ -45,7 +46,7 @@ function Header() {
   }
 
   return (
-    <header>
+    <header className={ style.header }>
       <button
         onClick={ handleProfileClick }
         style={ { background: 'none', border: 'none', cursor: 'pointer' } }
