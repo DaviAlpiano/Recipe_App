@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import APIContext from '../Context/ContextAPI/APIContext';
 import { MealCategory, DrinkType } from '../../types';
 import Footer from '../Footer/Footer';
+import style from './Drinks.module.css'
 
 function Drinks() {
   const [drinks, setDrinks] = useState<DrinkType[]>([]);
@@ -52,8 +53,10 @@ function Drinks() {
   };
 
   return (
-    <div>
-      <div className="category-buttons">
+    <main className={style.main}>
+      <div
+        id={ style.buttons }
+        className="category-buttons">
         <button
           data-testid="All-category-filter"
           onClick={ () => setSelectedCategory(null) }
@@ -71,9 +74,12 @@ function Drinks() {
           </button>
         ))}
       </div>
-      <div className="drinks-container">
+      <div
+        id={ style.drinks }
+        className="drinks-container">
         {drinks.map((drink, index) => (
           <div // Mudando de button para div para manter os data-testid
+            className={style.drink}
             key={ drink.idDrink }
             data-testid={ `${index}-recipe-card` }
             onClick={ () => handleRecipeClick(drink.idDrink) }
@@ -91,8 +97,7 @@ function Drinks() {
           </div>
         ))}
       </div>
-      <Footer />
-    </div>
+    </main>
   );
 }
 

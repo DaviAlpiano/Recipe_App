@@ -44,6 +44,7 @@ function App() {
               <>
                 <Header />
                 <Drinks />
+                <Footer />
               </>
             }
           />
