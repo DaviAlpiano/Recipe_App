@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import Footer from '../Footer/Footer';
+import style from './Profile.module.css'
 
 function Profile() {
   const navigate = useNavigate();
@@ -19,25 +19,35 @@ function Profile() {
     navigate('/');// Limpeza do localStorage e redireciona pra tela de login
   };
 
+  const email = JSON.parse(localStorage.getItem('user') as string);
+  
   return (
-    <>
-      <div>
+    <main className={style.main}>
         {/* Email do usuário */}
-        <p data-testid="profile-email">{localStorage.getItem('user')}</p>
-
+        <p
+          data-testid="profile-email"
+          className={style.email}>
+          {`Email: ${email.email}`}
+        </p>
         {/* Botões */}
-        <button data-testid="profile-done-btn" onClick={ handleDoneRecipesClick }>
-          Done Recipes
-        </button>
-        <button data-testid="profile-favorite-btn" onClick={ handleFavoriteRecipesClick }>
-          Favorite Recipes
-        </button>
-        <button data-testid="profile-logout-btn" onClick={ handleLogoutClick }>
-          Logout
-        </button>
-      </div>
-      <Footer />
-    </>
+        <div className={style.buttons}>
+          <button
+            className={style.button}
+            data-testid="profile-done-btn" onClick={ handleDoneRecipesClick }>
+            Done Recipes
+          </button>
+          <button
+            className={style.button}
+            data-testid="profile-favorite-btn" onClick={ handleFavoriteRecipesClick }>
+            Favorite Recipes
+          </button>
+          <button
+            className={style.button}
+            data-testid="profile-logout-btn" onClick={ handleLogoutClick }>
+            Logout
+          </button>
+        </div>
+    </main>
   );
 }
 

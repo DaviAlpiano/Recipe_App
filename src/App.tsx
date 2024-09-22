@@ -10,7 +10,6 @@ import Header from './components/Header/Header';
 import APIProvider from './components/Context/ContextAPI/APIProvider';
 import RecipeDetails from './components/RecipeDetails/RecipeDetails';
 import RecipeInProgress from './components/RecipeInProgress/RecipeInProgress';
-import Recipes from './components/Recipes/Recipes';
 import Footer from './components/Footer/Footer';
 
 function App() {
@@ -19,15 +18,6 @@ function App() {
       <Router>
         <Routes>
           <Route path="/" element={ <Login /> } />
-          <Route
-            path="/recipes"
-            element={
-              <>
-                <Header />
-                <Recipes />
-              </>
-            }
-          />
           <Route
             path="/meals"
             element={
@@ -54,6 +44,7 @@ function App() {
               <>
                 <Header />
                 <Profile />
+                <Footer />
               </>
             }
           />
