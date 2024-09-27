@@ -1,6 +1,6 @@
 .main {
   display: flex;
-  background-color: rgba(0, 0, 0, 0.24);
+  background-color: rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   align-items: center;
   justify-content: center;

@@ -73,6 +73,10 @@ function RecipeDetails() {
     }, 3000);
   }
 
+  if (recipeDetails) {
+    console.log(recipeDetails.strYoutube);
+  }
+
   const handleFavoriteRecipe = (favorRecipe: unknown) => {
     const recp = favorRecipe as any;
     const recipeToLocalStorage = {
@@ -108,69 +112,82 @@ function RecipeDetails() {
   }
 
   return (
-    <div>
+    <main className={ styles.main }>
       <Carrosel pathname={ location.pathname } />
-      <h1 data-testid="recipe-title">
-        {recipeDetails.strMeal || recipeDetails.strDrink}
-      </h1>
-      <p data-testid="recipe-category">
-        { drinkOrMeal === 'Meal' ? recipeDetails.strCategory : recipeDetails.strAlcoholic}
-      </p>
-      <h3>Ingredients</h3>
-      <ul>
-        {Object.entries(recipeDetails)
-          .filter(([key, value]) => key.includes('strIngredient') && value)
-          .map((ingredient, index) => (
-            <li
-              key={ index }
-              data-testid={ `${index}-ingredient-name-and-measure` }
-            >
-              {`${ingredient[1]} - ${recipeDetails[`strMeasure${index + 1}`]} `}
-            </li>
-          ))}
-      </ul>
-      <img
-        data-testid="recipe-photo"
-        src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
-        alt={ recipeDetails.strMeal || recipeDetails.strDrink }
-      />
-
-      <button
-        data-testid="share-btn"
-        type="button"
-        onClick={ handleShareClick }
-      >
+      <div className={ styles.name }>
+        <h1 data-testid="recipe-title">
+          {recipeDetails.strMeal || recipeDetails.strDrink}
+        </h1>
+        <p data-testid="recipe-category">
+          { drinkOrMeal === 'Meal'
+            ? recipeDetails.strCategory : recipeDetails.strAlcoholic}
+        </p>
+      </div>
+      <div className={ styles.recipe }>
         <div>
-          {shared || 'Share'}
+          <h3>Ingredients</h3>
+          <ul>
+            {Object.entries(recipeDetails)
+              .filter(([key, value]) => key.includes('strIngredient') && value)
+              .map((ingredient, index) => (
+                <li
+                  key={ index }
+                  data-testid={ `${index}-ingredient-name-and-measure` }
+                >
+                  {`${ingredient[1]} - ${recipeDetails[`strMeasure${index + 1}`]} `}
+                </li>
+              ))}
+          </ul>
         </div>
-      </button>
+        <img
+          data-testid="recipe-photo"
+          src={ recipeDetails.strMealThumb || recipeDetails.strDrinkThumb }
+          alt={ recipeDetails.strMeal || recipeDetails.strDrink }
+        />
+      </div>
+      <div className={ styles.buttons }>
+        <button
+          className={ styles.button }
+          data-testid="share-btn"
+          type="button"
+          onClick={ handleShareClick }
+        >
+          <div>
+            {shared || 'Share'}
+          </div>
+        </button>
 
-      {iconFavor ? <input
-        onClick={ () => handleFavoriteRecipe(recipeDetails) }
-        type="image"
-        data-testid="favorite-btn"
-        src={ blackHeartIcon }
-        alt="Favorite"
-      />
-        : <input
-            onClick={ () => handleFavoriteRecipe(recipeDetails) }
-            type="image"
-            data-testid="favorite-btn"
-            src={ whiteHeartIcon }
-            alt="Favorite"
-        />}
-
-      <p data-testid="instructions">{recipeDetails.strInstructions}</p>
-      <video>
-        {recipeDetails.strYoutube && (
-          <source
-            data-testid="video"
-            src={ recipeDetails.strYoutube }
-            type="video/mp4"
-          />
-        )}
-        <track kind="captions" />
-      </video>
+        {iconFavor ? <input
+          onClick={ () => handleFavoriteRecipe(recipeDetails) }
+          type="image"
+          data-testid="favorite-btn"
+          src={ blackHeartIcon }
+          alt="Favorite"
+        />
+          : <input
+              onClick={ () => handleFavoriteRecipe(recipeDetails) }
+              type="image"
+              data-testid="favorite-btn"
+              src={ whiteHeartIcon }
+              alt="Favorite"
+          />}
+      </div>
+      <p
+        className={ styles.inst }
+        data-testid="instructions">
+        {recipeDetails.strInstructions}
+      </p>
+      {recipeDetails.strYoutube && (
+        <iframe
+          data-testid="video"
+          width="560"
+          height="315"
+          src={ recipeDetails.strYoutube }
+          title="YouTube video player"
+          frameBorder="0"
+          allowFullScreen
+        />
+      )}
       <Link to={ `${location.pathname}/in-progress` }>
         <button
           data-testid="start-recipe-btn"
@@ -180,7 +197,7 @@ function RecipeDetails() {
           {inProgress ? 'Continue Recipe' : 'Start Recipe'}
         </button>
       </Link>
-    </div>
+    </main>
   );
 }
 

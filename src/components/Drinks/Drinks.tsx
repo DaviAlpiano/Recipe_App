@@ -52,10 +52,11 @@ function Drinks() {
   };
 
   return (
-    <main className={style.main}>
+    <main className={ style.main }>
       <div
         id={ style.buttons }
-        className="category-buttons">
+        className="category-buttons"
+      >
         <button
           data-testid="All-category-filter"
           onClick={ () => setSelectedCategory(null) }

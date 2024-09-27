@@ -1,4 +1,70 @@
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  height: 100vh;
+  width: 50%;
+  background-color: rgba(5, 5, 5, 0.5);
+  color: white
+}
+
+.name {
+  display: flex;
+  width: 60%;
+  align-items: center;
+  background-color: #8f634c;
+  justify-content: space-evenly;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.recipe {
+  width: 60%;
+  display: flex;
+  justify-content: space-evenly;
+  background-color: #8f634c;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.recipe > img {
+  height: 30vh;
+  width: 30vh;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  height: 5vh;
+  width: 60%;
+  justify-content: space-evenly;
+  background-color: #8f634c;
+  border-top: 100px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.buttons > input {
+  height: 3vh;
+}
+
 .button {
-  bottom: 0;
-  position: fixed;
+  display: inline-block;
+  padding: 3px;
+  transform: scale(1.5);
+  border: 1px solid black;
+  border-radius: 5px;
+  height: 2vh;
+  width: auto;
+  font-size: 1vh;
+  background-color: rgba(255, 255, 255, 0.664);
+  white-space: nowrap; 
+}
+
+.inst {
+  background-color: #8f634c;
+  width: 60%;
+  border-radius: 5px;
+  padding: 5px;
 }

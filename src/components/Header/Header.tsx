@@ -42,6 +42,7 @@ function Header() {
       break;
 
     default:
+      title = 'Recipes';
       break;
   }
 
