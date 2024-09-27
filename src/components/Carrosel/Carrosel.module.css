@@ -1,22 +1,47 @@
 .carrosel {
   display: flex;
   gap: 25px;
-  height: 200px;
+  width: 60%;
+  height: 17vh;
   overflow-x: scroll;
-  padding: 10px;
+  padding: 15px;
   scroll-snap-type: x mandatory;
-  width: 350px;
+  background-color: #8f634c;
+  margin-top: 5px;
 }
 
 .itemCar {
-  background-color: #f0f0f0;
+  background-color: #f0f0f054;
   border-radius: 8px;
   flex: 0 0 auto;
   padding: 10px;
   scroll-snap-align: start;
-  width: 50%;
+  width: 5.5vw;
 }
 
 .img {
   height: 100px;
+}
+
+/* Estiliza a barra de rolagem */
+::-webkit-scrollbar {
+  height: 10px;
+}
+
+/* Estiliza o trilho da barra de rolagem */
+::-webkit-scrollbar-track {
+  background-color: #00000059;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px; /* Cor de fundo do trilho */
+}
+
+/* Estiliza a "thumb", ou seja, a parte que você arrasta */
+::-webkit-scrollbar-thumb {
+  background-color: #AF9182; /* Cor da "thumb" */
+  border-radius: 10px; /* Arredondar os cantos */
+}
+
+/* Quando o usuário está interagindo com a "thumb" */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #af7a5f; /* Mudar a cor ao passar o mouse */
 }
