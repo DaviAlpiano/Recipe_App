@@ -29,8 +29,8 @@
 }
 
 .recipe > img {
-  height: 30vh;
-  width: 30vh;
+  height: 90%;
+  width: 50%;
 }
 
 .buttons {

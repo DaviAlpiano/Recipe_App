@@ -11,7 +11,7 @@ type APIContextWithText = {
 };
 // Farid: Conflito resolvido
 function SearchBar() {
-  const { searchOption, foods, text } = useContext(APIContext) as APIContextWithText;
+  const { searchOption, foods, text } = useContext(APIContext);
   const navigate = useNavigate();
   const [info, setInfo] = useState<InfoSearchBar>({
     pesquisa: '',

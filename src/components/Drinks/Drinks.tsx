@@ -12,7 +12,7 @@ function Drinks() {
 
   useEffect(() => {
     const fetchDrinks = async (category: string | null) => {
-      let url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+      let url = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a';
       if (category && category !== 'All') {
         url = `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${category}`;
       }

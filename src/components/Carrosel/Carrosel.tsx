@@ -26,7 +26,7 @@ function Carrosel({ pathname }:CarroselType) {
           str: 'strDrink',
           strThumb: 'strDrinkThumb' });
         mOrD = 'drinks';
-        apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
+        apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a';
       } else if (pathname.includes('/drinks/')) {
         setInfo({
           id: 'idMeal',
@@ -40,7 +40,8 @@ function Carrosel({ pathname }:CarroselType) {
       try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        setAllRec(data[mOrD]);
+        setAllRec(data[mOrD] || []);
+        // Davi: se a resposta for vazia, retorna um array vazio
       } catch (error) {
         console.error('Erro ao buscar receitas', error);
       }

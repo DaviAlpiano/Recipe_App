@@ -34,3 +34,7 @@ button:hover {
 label:hover {
   cursor: pointer;
 }
+
+ul {
+  list-style-position: inside;
+}
