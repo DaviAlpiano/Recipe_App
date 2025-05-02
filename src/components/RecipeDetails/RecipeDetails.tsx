@@ -36,7 +36,8 @@ function RecipeDetails() {
     };
 
     const localS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (localS) {
+    
+    if (localS.length > 0) {
       if (location.pathname.includes('meals')) {
         const tOrF = id in localS.meals;
         setInProgress(tOrF);
@@ -71,10 +72,6 @@ function RecipeDetails() {
     setTimeout(() => {
       setShared('');
     }, 3000);
-  }
-
-  if (recipeDetails) {
-    console.log(recipeDetails.strYoutube);
   }
 
   const handleFavoriteRecipe = (favorRecipe: unknown) => {
@@ -177,12 +174,12 @@ function RecipeDetails() {
         data-testid="instructions">
         {recipeDetails.strInstructions}
       </p>
-      {recipeDetails.strYoutube && (
+      {recipeDetails.strYoutube && ( 
         <iframe
           data-testid="video"
           width="560"
           height="315"
-          src={ recipeDetails.strYoutube }
+          src={ "https://www.youtube.com/embed/" + recipeDetails.strYoutube.split('=')[1] }
           title="YouTube video player"
           frameBorder="0"
           allowFullScreen

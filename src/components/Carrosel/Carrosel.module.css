@@ -2,7 +2,7 @@
   display: flex;
   gap: 25px;
   width: 60%;
-  height: 17vh;
+  height: 70%;
   overflow-x: scroll;
   padding: 15px;
   scroll-snap-type: x mandatory;
@@ -16,11 +16,14 @@
   flex: 0 0 auto;
   padding: 10px;
   scroll-snap-align: start;
-  width: 5.5vw;
+  width: 10%;
+  height: 70%;
+  overflow-x: hidden;
 }
 
 .img {
-  height: 100px;
+  width: 100%;
+  height: auto;
 }
 
 /* Estiliza a barra de rolagem */
