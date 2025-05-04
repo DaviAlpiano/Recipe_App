@@ -8,6 +8,7 @@
   scroll-snap-type: x mandatory;
   background-color: #8f634c;
   margin-top: 5px;
+  justify-content: space-evenly;
 }
 
 .itemCar {

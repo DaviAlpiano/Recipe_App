@@ -2,9 +2,7 @@
   background-color: #6B4B3A;
   bottom: 0;
   color: white;
-  padding: 10px;
-  position: fixed;
+  padding: 10px 0;
   text-align: center;
   width: 100%;
-  z-index: 1;
 }

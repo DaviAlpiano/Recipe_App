@@ -1,16 +1,16 @@
 .meal > img {
-    height: 20vh;
-    width: 20vh;
+    width: 100%;
   }
 
 .main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 100%;
-    width: 100vh;
+    min-height: 90vh;
+    width: 70%;
     background-color: rgba(0, 0, 0, 0.25);
     gap: 20px;
+    padding-bottom: 10px;
   }
 
 #meals {
@@ -21,8 +21,7 @@
 }
 
 .meal {
-  height: 23vh;
-  width: 10vw;
+  width: 20%;
   background-color: #D8B84B;
   padding: 5px;
   border-radius: 5px;
@@ -40,7 +39,7 @@
   width: 96%;
   justify-content: space-evenly;
   background-color: #D8B84B;
-  padding: 20px;
+  padding: 20px 0;
 }
 
 #buttons > button {
@@ -48,10 +47,13 @@
   border: 1px solid black;
   border-radius: 5px;
   height: 2vh;
-  width: 3vw;
+  min-width: 5%;
   font-size: 1vh;
   background-color: rgba(255, 255, 255, 0.664);
   transition: transform 0.5s ease;
+  padding: 0 1%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 #buttons > button:hover {
