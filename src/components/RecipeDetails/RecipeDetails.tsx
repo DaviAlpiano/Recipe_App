@@ -36,8 +36,8 @@ function RecipeDetails() {
     };
 
     const localS = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    
-    if (localS.length > 0) {
+
+    if (localS != null && localS.length > 0) {
       if (location.pathname.includes('meals')) {
         const tOrF = id in localS.meals;
         setInProgress(tOrF);

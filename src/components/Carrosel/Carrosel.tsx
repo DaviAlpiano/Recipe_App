@@ -26,7 +26,7 @@ function Carrosel({ pathname }:CarroselType) {
           str: 'strDrink',
           strThumb: 'strDrinkThumb' });
         mOrD = 'drinks';
-        apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?f=a';
+        apiUrl = 'https://www.thecocktaildb.com/api/json/v1/1/filter.php?a=Alcoholic';
       } else if (pathname.includes('/drinks/')) {
         setInfo({
           id: 'idMeal',
