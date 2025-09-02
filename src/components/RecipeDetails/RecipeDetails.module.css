@@ -3,7 +3,7 @@
   flex-direction: column;
   align-items: center;
   gap: 10px;
-  height: 100%;
+  min-height: 100dvh;
   width: 70%;
   background-color: rgba(5, 5, 5, 0.5);
   color: white;
@@ -37,7 +37,7 @@
 .buttons {
   display: flex;
   align-items: center;
-  height: 5vh;
+  height: 5dvh;
   width: 60%;
   justify-content: space-evenly;
   background-color: #8f634c;
@@ -47,7 +47,7 @@
 }
 
 .buttons > input {
-  height: 3vh;
+  height: 3dvh;
 }
 
 .button {
@@ -56,9 +56,9 @@
   transform: scale(1.5);
   border: 1px solid black;
   border-radius: 5px;
-  height: 2vh;
+  height: 2dvh;
   width: auto;
-  font-size: 1vh;
+  font-size: 1dvh;
   background-color: rgba(255, 255, 255, 0.664);
   white-space: nowrap; 
 }

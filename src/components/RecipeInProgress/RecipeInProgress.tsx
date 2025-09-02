@@ -1,7 +1,7 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { Recipe } from '../../types';
-import './RecipeInProgress.css';
+import styles from './RecipeInProgress.module.css';
 
 export const createMealRecipe = (receita: Recipe) => {
   return {
@@ -176,58 +176,77 @@ function RecipeInProgress() {
   }
 
   return (
-    <div>
-      <img
-        src={ recipe.strMealThumb || recipe.strDrinkThumb }
-        alt={ recipe.strMeal || recipe.strDrink }
-        data-testid="recipe-photo"
-      />
-      <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
-      <p data-testid="recipe-category">{recipe.strCategory}</p>
-      {recipe.strAlcoholic && <p>{recipe.strAlcoholic}</p>}
-      <ul>
-        {Object.keys(recipe)
-          .filter((key) => key.startsWith('strIngredient') && recipe[key])
-          .map((key, index) => {
-            const ingredient = recipe[key] as string;
-            return (
-              <li key={ key }>
-                <label
-                  data-testid={ `${index}-ingredient-step` }
-                  className={ checkedIngredients.includes(
-                    ingredient,
-                  ) ? 'checked-ingredient' : '' }
-                >
-                  <input
-                    type="checkbox"
-                    onChange={ () => handleCheck(ingredient) }
-                    checked={ checkedIngredients.includes(ingredient) }
-                  />
-                  <span>{ingredient}</span>
-                </label>
-              </li>
-            );
-          })}
-      </ul>
-      <p data-testid="instructions">{recipe.strInstructions}</p>
-      <button data-testid="share-btn" onClick={ copyLink }>Compartilhar</button>
-      {copyMessage && <p>{copyMessage}</p>}
-      <button onClick={ toggleFavorite }>
+    <main className={ styles.main }>
+      <div className={ styles.details }>
         <img
-          data-testid="favorite-btn"
-          src={ isFoodFavorited() ? '/src/images/blackHeartIcon.svg'
-            : '/src/images/whiteHeartIcon.svg' }
-          alt="Favorito"
+          src={ recipe.strMealThumb || recipe.strDrinkThumb }
+          alt={ recipe.strMeal || recipe.strDrink }
+          data-testid="recipe-photo"
         />
-      </button>
-      <button
-        data-testid="finish-recipe-btn"
-        disabled={ !allIngredientsChecked() }
-        onClick={ finishRecipe }
-      >
-        Finalizar Receita
-      </button>
-    </div>
+        <div className={ styles.detialsName }>
+          <h1 data-testid="recipe-title">{recipe.strMeal || recipe.strDrink}</h1>
+          <p data-testid="recipe-category">{recipe.strCategory}</p>
+          {recipe.strAlcoholic && <p>{recipe.strAlcoholic}</p>}
+        </div>
+      </div>
+      <div className={ styles.steps }>
+        <ul>
+          {Object.keys(recipe)
+            .filter((key) => key.startsWith('strIngredient') && recipe[key])
+            .map((key, index) => {
+              const ingredient = recipe[key] as string;
+              return (
+                <li key={ key }>
+                  <label
+                    data-testid={ `${index}-ingredient-step` }
+                    className={ checkedIngredients.includes(
+                      ingredient,
+                    ) ? 'checked-ingredient' : '' }
+                  >
+                    <input
+                      type="checkbox"
+                      onChange={ () => handleCheck(ingredient) }
+                      checked={ checkedIngredients.includes(ingredient) }
+                    />
+                    <span>{ingredient}</span>
+                  </label>
+                </li>
+              );
+            })}
+        </ul>
+        <p>Instruções:</p>
+        <p data-testid="instructions">{ recipe.strInstructions }</p>
+      </div>
+      <div className={ styles.buttons }>
+        <button
+          data-testid="share-btn"
+          onClick={ copyLink }
+          className={ styles.button }
+        >
+          Compartilhar
+        </button>
+        {copyMessage && <p>{copyMessage}</p>}
+        <button
+          onClick={ toggleFavorite }
+          className={ styles.favorite }
+        >
+          <img
+            data-testid="favorite-btn"
+            src={ isFoodFavorited() ? '/src/images/blackHeartIcon.svg'
+              : '/src/images/whiteHeartIcon.svg' }
+            alt="Favorito"
+          />
+        </button>
+        <button
+          data-testid="finish-recipe-btn"
+          disabled={ !allIngredientsChecked() }
+          onClick={ finishRecipe }
+          className={ styles.button }
+        >
+          Finalizar Receita
+        </button>
+      </div>
+    </main>
   );
 }
 
